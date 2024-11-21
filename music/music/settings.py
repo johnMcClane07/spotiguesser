@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'music.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'spotify',
-        'USER': 'root',
-        'PASSWORD': '12345678',
+        'NAME': '',
+        'USER': '',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -133,8 +133,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-CLIENT_ID = '426e451ffaf04f388b75b18254aa2692'
-CLIENT_SECRET = '3cbec792adfb45e2857a8c168cd12526'
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 REDIRECT_URI = 'http://127.0.0.1:8000/login/callback'
 SCOPE = 'user-read-private, user-read-email, playlist-read-private, user-top-read, user-follow-read,streaming,user-modify-playback-state'
 
