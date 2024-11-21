@@ -32,7 +32,23 @@
    ```bash
    git clone https://github.com/johnMcClane07/spotiguesser.git
 2. **Создайте виртуальное окружение**
-   ```bash 
+   ```bash
+   python -m venv env
+   source env/bin/activate  # Для macOS/Linux
+   env\Scripts\activate     # Для Windows
+
+3. **Установите зависимости**
+  ```bash
+   pip install -r requirements.txt
+
+
+4. **Настройте Редис**
+'''bash
+sudo apt install redis
+redis-server
+
+
+
    
    
 
