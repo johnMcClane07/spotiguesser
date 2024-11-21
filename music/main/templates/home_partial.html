@@ -1,0 +1,20 @@
+{% if artists %}
+    
+    <ul style="list-style-type: none; padding: 0;">
+        {% for artist in artists %}
+            <li style="display: flex; align-items: center; margin-bottom: 10px;">
+                
+                <img src="{{ artist.image_url }}" alt="{{ artist.name }}" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 15px;">
+
+                
+                <a href="/quiz/{{ artist.id }}" style="text-decoration: none; color: inherit;">
+                    <span>{{ artist.name }}</span>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+   
+    
+{% endif %}
+

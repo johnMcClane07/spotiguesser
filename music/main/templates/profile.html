@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block title %}
+    User Profile - Spotiguesser
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="title">Ваш профиль</div>
+        <div class="subtitle">Вот все квизы, которые вы прошли:</div>
+        
+        <div class="quiz-list">
+            {% if completed_quizzes %}
+                <ul style="list-style: none; padding: 0;">
+                    {% for quiz in completed_quizzes %}
+                        <li style="margin-bottom: 20px; text-align: left;">
+                            <div style="background-color: #222; padding: 15px; border-radius: 5px;">
+                                <h3 style="margin: 0; font-size: 20px;">{{ quiz.artist_name }}</h3>
+                                <p style="margin: 5px 0; color: #ccc;">Счет: {{ quiz.score }}/10</p>
+                                <p style="margin: 5px 0; color: #ccc;">Время: {{ quiz.elapsed_time }} секунд</p>
+                                <p style="margin: 5px 0; color: #ccc;">Дата: {{ quiz.date }}</p>
+                                <a href="{% url 'quiz' artist_id=quiz.artist %}" style="color: #ffcc00; text-decoration: none;">Пройти еще раз</a>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>You haven't completed any quizzes yet. Start exploring now!</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

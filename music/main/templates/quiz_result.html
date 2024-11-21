@@ -1,0 +1,28 @@
+
+
+{% block title %}Результаты Викторины{% endblock %}
+
+{% block content %}
+    <div class="result-container">
+        <h1>Ваши результаты викторины</h1>
+        <p>Ваш счёт: {{ score }} из {{ total_questions }},время: {{ time }}</p>
+        <button onclick="window.location.href = '{% url 'quiz' artist_id=artist_id %}';" style="margin-top: 20px; padding: 10px 20px; background-color: #ffcc00; border: none; border-radius: 5px; color: #111; font-weight: bold; cursor: pointer;">Пройти заново</button>
+    </div>
+    <form method="POST" action="{% url 'save_result' artist_id=artist_id %}" hx-post="{% url 'save_result' artist_id=artist_id %}" hx-target="#result-table">
+        {% csrf_token %}
+        <input type="hidden" name="score" value="{{ score }}" />
+        <input type="hidden" name="elapsed_time" value="{{ time }}" />
+        <input type="submit" value="Сохранить результат" style="margin-top: 20px; padding: 10px 20px; background-color: #ffcc00; border: none; border-radius: 5px; color: #111; font-weight: bold; cursor: pointer;" onclick="this.classList.add('hidden');">
+    </form>
+    <div id="result-table">
+    </div>
+    
+    <style>
+        .hidden {
+            display: none;
+        }
+    </style>
+    
+{% endblock %}
+
+

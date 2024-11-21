@@ -1,0 +1,66 @@
+
+<table class="quiz-result-table">
+    <thead>
+        <tr>
+            <th>Пользователь</th>
+            <th>Счет</th>
+            <th>Время</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for result in quiz_result %}
+            <tr>
+                <td>{{ result.user }}</td>
+                <td>{{ result.score }}</td>
+                <td>{{ result.elapsed_time }} сек</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+<style>
+    .quiz-result-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 20px 0;
+        background-color: #222;
+        color: #fff;
+        font-family: Arial, sans-serif;
+    }
+
+    .quiz-result-table th,
+    .quiz-result-table td {
+        padding: 12px 20px;
+        text-align: center;
+        border: 1px solid #444;
+    }
+
+    .quiz-result-table th {
+        background-color: #ffcc00;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .quiz-result-table tr:nth-child(even) {
+        background-color: #333;
+    }
+
+    .quiz-result-table tr:hover {
+        background-color: #444;
+        cursor: pointer;
+    }
+
+    .quiz-result-table td {
+        font-size: 16px;
+    }
+
+    /* Адаптивный дизайн */
+    @media (max-width: 600px) {
+        .quiz-result-table th,
+        .quiz-result-table td {
+            padding: 8px 12px;
+            font-size: 14px;
+        }
+    }
+</style>

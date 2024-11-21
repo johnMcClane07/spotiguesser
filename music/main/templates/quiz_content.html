@@ -1,0 +1,35 @@
+<form method="post"
+      hx-post="{% url 'quiz' artist_id=artist_id %}"
+      hx-target="#quiz-content"
+      hx-swap="innerHTML">
+    {% csrf_token %}
+    
+    <div class="container">
+        <h1>Послушай трек и выбери правильный вариант</h1>
+        <p>Вопрос {{ progress }} из {{ total_questions }}</p>
+    </div>
+
+    <audio id="audio-player" controls>
+        <source src="{{ current_track.preview_url }}" type="audio/mpeg">
+        Ваш браузер не поддерживает аудиоэлемент.
+    </audio>
+
+    <div class="options-grid" style="display: flex; justify-content: space-around; gap: 20px; flex-wrap: wrap;">
+        {% for option in options %}
+        <label style="cursor: pointer; text-align: center; width: 30%;">
+            <input type="radio" name="answer" value="{{ option.name }}" required style="display: none;">
+            <div style="border: 2px solid #444; border-radius: 10px; overflow: hidden; padding: 10px;">
+                <img src="{{ option.album_image }}" alt="{{ option.name }}" style="width: 100%; border-radius: 10px;">
+                <p style="margin-top: 10px; color: #fff; font-weight: bold;">{{ option.name }}</p>
+            </div>
+        </label>
+        {% endfor %}
+    </div>
+    
+    <button type="submit" style="margin-top: 20px; padding: 10px 20px; background-color: #ffcc00; border: none; border-radius: 5px; color: #111; font-weight: bold; cursor: pointer;">
+        Дальше
+    </button>
+        
+    </div>
+</form>
+<script src="https://unpkg.com/htmx.org@1.8.4"></script>

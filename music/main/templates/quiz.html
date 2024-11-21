@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Музыкальная Викторина{% endblock %}
+
+{% block content %}
+    <div id="quiz-content">
+        {% include 'quiz_content.html' %}
+    </div>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+{% endblock %}

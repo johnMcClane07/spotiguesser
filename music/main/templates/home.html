@@ -1,0 +1,260 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Spotiguesser{% endblock %}
+
+{% block content %}
+    <style>
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000; 
+            color: #fff; 
+            margin: 0;
+            padding: 0;
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 50px;
+            color: #fff; 
+        }
+
+        .subtitle {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #ccc; 
+        }
+
+        
+        .search-bar {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0; 
+        }
+
+        .search-bar input {
+            width: 400px;
+            padding: 15px;
+            font-size: 16px;
+            border: 2px solid #555; 
+            border-radius: 25px;
+            outline: none;
+            background-color: #222; 
+            color: #fff; 
+            transition: border-color 0.3s ease;
+        }
+
+        .search-bar input::placeholder {
+            color: #888; 
+        }
+
+        .search-bar input:focus {
+            border-color: #007bff; 
+        }
+
+      
+        #results {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            margin-top: 10px; 
+            margin-bottom: 0; 
+        }
+
+        #results ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            width: 400px;
+            border: 1px solid #444; 
+            border-radius: 5px;
+            background-color: #222; 
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        #results li {
+            padding: 12px;
+            border-bottom: 1px solid #333; 
+            cursor: pointer;
+            color: #fff;
+        }
+
+        #results li:hover {
+            background-color: #444;
+        }
+
+        .no-results {
+            padding: 12px;
+            text-align: center;
+            color: #999; 
+        }
+        .artists {
+            display: inline-block;
+        }
+        
+        .artist {
+            display: inline-block;
+            margin: 0px;
+            position: relative;
+            background-color: #000;
+            color: #fff; 
+        }
+        
+        .artist-image {
+            max-width: 90px;
+            max-height: 90px;
+            border-radius: 50%;
+        }
+        
+        .artist-name {
+            font-size: 14px;
+            text-align: center;
+            color: #fff;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100%;
+        }
+        .artist-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .quiz-counter {
+            display: flex;
+            justify-content: center;  
+            align-items: center;  
+            font-size: 18px;  
+            font-weight: bold;  
+            margin-bottom: 8px;
+        }
+        
+        .counter-circle {
+            width: 12px;  
+            height: 12px;  
+            background-color: green;  
+            border-radius: 50%; 
+            margin-right: 8px;  
+            margin-bottom: 3px;
+        }
+        
+       
+        .login-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 30px;
+            background-color: #1db954; 
+            border-radius: 15px;
+            color: #fff;
+            margin-top: 30px;
+        }
+        
+        
+        .login-container .login-message {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.5; 
+        }
+        
+        
+        .login-container .login-btn {
+            padding: 12px 40px;
+            background-color: #fff;
+            color: #1db954;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 25px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s ease;
+        }
+        
+       
+        .login-container .login-btn:hover {
+            background-color: #1db954;
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        
+        .login-container .login-btn:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(29, 185, 84, 0.4);
+        }
+
+        .profile-link {
+            position: fixed;
+            top: 10px; 
+            right: 15px; 
+            color: #fff; 
+            text-decoration: none; 
+            font-size: 16px; 
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px; 
+            border-radius: 8px; 
+            transition: background-color 0.3s; 
+        }
+    
+        .profile-link:hover {
+            background-color: rgba(255, 255, 255, 0.2); 
+        }
+        
+    </style>
+
+    
+
+
+
+    <div class="title">Настоящий ли ты фанат исполнителя?</div>
+    <div class="subtitle">Угадай его трек по короткому отрывку </div>
+
+    <div class="quiz-counter">
+        <span class="counter-circle"></span>
+        Квизов пройдено: {{counter}}
+    </div>
+    
+    
+    {% if is_authenticated %}
+    <a href="{% url 'profile' %}" class="profile-link">Профиль</a>
+    <div class="search-bar">
+        <input name="q"
+           placeholder="Search for an artist"
+           hx-get="{% url 'partial_search' %}"   
+           hx-target="#results"         
+           hx-trigger="input delay:0.2s" 
+        >
+    </div>
+
+    <div id="results">
+        {% include 'home_partial.html' %}
+    </div>
+    <div>
+        {% if is_authenticated %}
+        <p>Пройдите тест по своему любимому исполнителю</p>
+        <div class="artists">
+            {% for artist in favourite_artists %}
+            <a href="{% url 'quiz' artist.id %}" class="artist-link">
+                <div class="artist">
+                    <img src="{{ artist.image_url }}" alt="{{ artist.name }}" class="artist-image" style="width: 50px; height: 50px;">
+                    <p class="artist-name" >{{ artist.name }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="login-container">
+        <p class="login-message">Войдите в свой аккаунт Spotify, чтобы начать игру</p>
+        <a href="{% url 'login' %}" class="login-btn">Вход</a>
+    </div>
+{% endif %}
+
+{% endblock %}
